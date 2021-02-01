@@ -1,6 +1,8 @@
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
+# nltk.download('punkt')
+# nltk.download('all')
 import numpy
 import tflearn
 import random

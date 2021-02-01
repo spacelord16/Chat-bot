@@ -1,6 +1,8 @@
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
+# nltk.download('punkt')
+# nltk.download('all')
 import numpy
 import tflearn
 import random
@@ -89,7 +91,7 @@ except:
 def bag_words(s, words):
     bag = [0 for _ in range(len(words))]
 
-    s_words = nltk.word_tokenize(s)
+    s_words = nltk.words_tokenize(s)
     s_words = [stemmer.stem(word.lower()) for word in s_words]
 
     for se in s_words:
@@ -107,13 +109,6 @@ def reply():
             break
 
         results = model.predict([bag_words(inp, words)])
-        results_index = numpy.argmax(results)
-        tag = labels[results_index]
-        # print(tag)
+        print(results)
 
-        for tg in data["intents"]:
-            if tg["tag"] == tag:
-                respones = tg['responses']
-            
-        print(random.choice(respones))
 reply()

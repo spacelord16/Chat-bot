@@ -1,0 +1,2 @@
+model_checkpoint_path: "/mnt/d/Chat bot/model.tflearn"
+all_model_checkpoint_paths: "/mnt/d/Chat bot/model.tflearn"

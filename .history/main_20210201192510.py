@@ -1,6 +1,8 @@
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
+nltk.download('punkt')
+
 import numpy
 import tflearn
 import random
@@ -37,31 +39,31 @@ except:
 
     labels = sorted(labels)
 
-    training = []
-    output = []
+training = []
+output = []
 
-    out_empty = [0 for _ in range(len(labels))]
+out_empty = [0 for _ in range(len(labels))]
 
-    for x, doc in enumerate(docs_x):
-        bag = []
+for x, doc in enumerate(docs_x):
+    bag = []
 
-        wrds = [stemmer.stem(w) for w  in doc]
+    wrds = [stemmer.stem(w) for w  in doc]
 
-        for w in words:
-            if w in wrds:
-                bag.append(1)
-            else:
-                bag.append(0)
+    for w in words:
+        if w in wrds:
+            bag.append(1)
+        else:
+            bag.append(0)
 
-        output_row = out_empty[:]
-        output_row[labels.index(docs_y[x])] = 1
+    output_row = out_empty[:]
+    output_row[labels.index(docs_y[x])] = 1
 
-        training.append(bag)
-        output.append(output_row)
+    training.append(bag)
+    output.append(output_row)
 
 
-    #training model
-        
+#training model
+    
     training = numpy.array(training)
     output = numpy.array(output)
 
@@ -89,13 +91,13 @@ except:
 def bag_words(s, words):
     bag = [0 for _ in range(len(words))]
 
-    s_words = nltk.word_tokenize(s)
+    s_words = nltk.words_tokenize(s)
     s_words = [stemmer.stem(word.lower()) for word in s_words]
 
     for se in s_words:
         for i,w in enumerate(words):
            if w == se:
-               bag[i]= 1
+               bag[i].append(1)
 
     return numpy.array(bag)
 
@@ -107,13 +109,4 @@ def reply():
             break
 
         results = model.predict([bag_words(inp, words)])
-        results_index = numpy.argmax(results)
-        tag = labels[results_index]
-        # print(tag)
-
-        for tg in data["intents"]:
-            if tg["tag"] == tag:
-                respones = tg['responses']
-            
-        print(random.choice(respones))
-reply()
+        print(results)

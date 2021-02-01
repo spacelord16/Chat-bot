@@ -1,6 +1,8 @@
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
+# nltk.download('punkt')
+# nltk.download('all')
 import numpy
 import tflearn
 import random
@@ -109,11 +111,5 @@ def reply():
         results = model.predict([bag_words(inp, words)])
         results_index = numpy.argmax(results)
         tag = labels[results_index]
-        # print(tag)
-
-        for tg in data["intents"]:
-            if tg["tag"] == tag:
-                respones = tg['responses']
-            
-        print(random.choice(respones))
+        print(tag)
 reply()
